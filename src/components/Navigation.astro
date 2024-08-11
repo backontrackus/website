@@ -1,16 +1,14 @@
 ---
-const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1); // remove the first "/"
 ---
 
 <nav class="sticky top-0 w-screen justify-center items-center text-center py-5 bg-blue">
-  <a class={currentPath === "" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/">Home</a>
-  <a class={currentPath === "mission" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/mission">Mission</a>
-  <a class={currentPath === "volunteer" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/volunteer">Volunteer</a>
-  <a class={currentPath === "photos" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/photos">Photos</a>
-  <a class={currentPath === "team" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/team">Team</a>
-  <a class={currentPath === "apply" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/apply">Apply</a>
-  <a class={currentPath === "calendar" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/calendar">Calendar</a>
-  <a class={currentPath === "shop" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/shop">Shop</a>
-  <a class={currentPath === "contact" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/contact">Contact</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/">Home</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/mission">Mission</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/volunteer">Volunteer</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/photos">Photos</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/team">Team</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/apply">Apply</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/calendar">Calendar</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/shop">Shop</a>
+  <a class="mx-5 text-white hover:text-orange transition-colors" href="/contact">Contact</a>
 </nav>
