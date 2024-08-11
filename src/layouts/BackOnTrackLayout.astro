@@ -2,6 +2,8 @@
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.astro";
 
+import '@fontsource-variable/oswald';
+
 const { title } = Astro.props;
 ---
 <html lang="en">
@@ -13,6 +15,11 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <style is:global>
+      * {
+        font-family: 'Oswald Variable', sans-serif;
+      }
+    </style>
     <Navigation />
     <slot />
     <Footer />
