@@ -3,7 +3,7 @@ const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1); // remove the first "/"
 ---
 
-<nav class="fixed w-screen justify-center items-center text-center top-0 py-5 bg-blue">
+<nav class="sticky top-0 w-screen justify-center items-center text-center py-5 bg-blue">
   <a class={currentPath === "" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/">Home</a>
   <a class={currentPath === "mission" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/mission">Mission</a>
   <a class={currentPath === "volunteer" ? "mx-5 text-orange" : "mx-5 text-white hover:text-orange transition-colors"} href="/volunteer">Volunteer</a>
