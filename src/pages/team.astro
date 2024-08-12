@@ -1,7 +1,28 @@
 ---
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
+import PocketBase from "pocketbase";
+
+const pb = new PocketBase("https://backontrack.lukeo.hackclub.app");
+
+const records = await pb.collection("team").getFullList({
+  sort: "+title,+location,+name",
+});
+console.log(records);
 ---
 
 <BackOnTrackLayout title="Back on Track | Team">
-  <div class="h-full"></div>
+  <div class="">
+    {
+      records.map((record) => (
+        <div class="p-5">
+          <h2>{record.name}</h2>
+          <p>{record.title}</p>
+          <p>{record.location}</p>
+          <img
+            src={pb.getFileUrl(record, record.image, { thumb: "100x100" })}
+          />
+        </div>
+      ))
+    }
+  </div>
 </BackOnTrackLayout>
