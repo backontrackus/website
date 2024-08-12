@@ -58,14 +58,14 @@ const records = await pb.collection("team").getFullList({
   <div id="team-grid" class="grid content-center justify-center">
     {
       records.map((record) => (
-        <div class="bg-gray m-5">
+        <div class="bg-gray m-5 p-5">
           <img
             class="w-full object-cover"
             src={pb.getFileUrl(record, record.image)}
           />
-          <h2>{record.name}</h2>
-          <p>{record.title}</p>
-          <div class="flex items-center">
+          <h2 class="text-2xl">{record.name}</h2>
+          <p class="text-lg">{record.title}</p>
+          <div class="m-2 flex items-center justify-center">
             <svg
               class="h-8 w-8 text-orange"
               viewBox="0 0 24 24"
@@ -75,13 +75,13 @@ const records = await pb.collection("team").getFullList({
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              {" "}
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />{" "}
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <p>{record.location}</p>
+            <p class="m-1 text-lg">{record.location}</p>
           </div>
-          <p>{record.bio}</p>
+          <hr class="m-5" />
+          <p class="text-lg">{record.bio}</p>
         </div>
       ))
     }
