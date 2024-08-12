@@ -9,7 +9,7 @@ export default {
       current: "currentColor",
       black: colors.black,
       white: colors.white,
-      gray: colors.neutral,
+      gray: "#EEEEEC",
       red: colors.rose,
       yellow: colors.amber,
       blue: "#007BC1",

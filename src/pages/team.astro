@@ -58,7 +58,7 @@ const records = await pb.collection("team").getFullList({
   <div id="team-grid" class="grid content-center justify-center">
     {
       records.map((record) => (
-        <div class="m-5 bg-gray-500">
+        <div class="bg-gray m-5">
           <h2>{record.name}</h2>
           <p>{record.title}</p>
           <p>{record.location}</p>
