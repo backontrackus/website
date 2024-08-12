@@ -62,6 +62,7 @@ const records = await pb.collection("team").getFullList({
           <h2>{record.name}</h2>
           <p>{record.title}</p>
           <p>{record.location}</p>
+          <p>{record.bio}</p>
           <img class="object-cover" src={pb.getFileUrl(record, record.image)} />
         </div>
       ))
