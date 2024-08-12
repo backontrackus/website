@@ -82,13 +82,26 @@ const records = await pb.collection("team").getFullList({
           </div>
           <hr />
           <p class="mb-5 mt-5 text-lg">{record.bio}</p>
+
           <div class="mt-auto flex align-bottom">
-            <a href={record.instagram} class="inline">
-              <img src="/instagram.webp" width="40" height="40" />
-            </a>
-            <a href={record.linkedin} class="inline">
-              <img src="/linkedin.webp" width="40" height="40" />
-            </a>
+            {() => {
+              if (record.instagram) {
+                return (
+                  <a href={record.instagram} class="inline">
+                    <img src="/instagram.webp" width="40" height="40" />
+                  </a>
+                );
+              }
+            }}
+            {() => {
+              if (record.linkedin) {
+                return (
+                  <a href={record.linkedin} class="inline">
+                    <img src="/linkedin.webp" width="40" height="40" />
+                  </a>
+                );
+              }
+            }}
           </div>
         </div>
       ))
