@@ -55,6 +55,13 @@ const records = await pb.collection("team").getFullList({
     resizeGridCols();
     window.addEventListener("resize", resizeGridCols);
   </script>
+  <div class="m-5">
+    <h1 class="text-center text-5xl text-blue">MEET OUR NATIONAL EXECUTIVES</h1>
+    <hr class="m-5" />
+    <h2 class="text-center text-2xl text-blue">
+      Meet the people who keep Back on Track on track!
+    </h2>
+  </div>
   <div id="team-grid" class="grid content-center justify-center">
     {
       records.map((record) => (
@@ -63,7 +70,7 @@ const records = await pb.collection("team").getFullList({
             class="w-full object-cover"
             src={pb.getFileUrl(record, record.image)}
           />
-          <h2 class="text-2xl">{record.name}</h2>
+          <p class="text-2xl">{record.name}</p>
           <p class="text-lg">{record.title}</p>
           <div class="m-5 flex items-center justify-center">
             <svg
