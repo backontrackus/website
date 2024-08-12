@@ -59,7 +59,10 @@ const records = await pb.collection("team").getFullList({
     {
       records.map((record) => (
         <div class="bg-gray m-5">
-          <img class="object-cover" src={pb.getFileUrl(record, record.image)} />
+          <img
+            class="w-full object-cover"
+            src={pb.getFileUrl(record, record.image)}
+          />
           <h2>{record.name}</h2>
           <p>{record.title}</p>
           <div class="flex items-center">
