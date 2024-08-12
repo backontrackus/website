@@ -7,14 +7,58 @@ const pb = new PocketBase("https://backontrack.lukeo.hackclub.app");
 const records = await pb.collection("team").getFullList({
   sort: "+title,+location,+name",
 });
-console.log(records);
 ---
 
 <BackOnTrackLayout title="Back on Track | Team">
-  <div class="grid grid-cols-5 content-center justify-center">
+  <script>
+    function resizeGridCols() {
+      const teamGrid = document.getElementById("team-grid");
+      if (teamGrid !== null) {
+        if (window.innerWidth <= 640) {
+          teamGrid.classList.remove("grid-cols-1");
+          teamGrid.classList.remove("grid-cols-2");
+          teamGrid.classList.remove("grid-cols-3");
+          teamGrid.classList.remove("grid-cols-4");
+          teamGrid.classList.remove("grid-cols-5");
+          teamGrid.classList.add("grid-cols-1");
+        } else if (window.innerWidth <= 768) {
+          teamGrid.classList.remove("grid-cols-1");
+          teamGrid.classList.remove("grid-cols-2");
+          teamGrid.classList.remove("grid-cols-3");
+          teamGrid.classList.remove("grid-cols-4");
+          teamGrid.classList.remove("grid-cols-5");
+          teamGrid.classList.add("grid-cols-2");
+        } else if (window.innerWidth <= 1024) {
+          teamGrid.classList.remove("grid-cols-1");
+          teamGrid.classList.remove("grid-cols-2");
+          teamGrid.classList.remove("grid-cols-3");
+          teamGrid.classList.remove("grid-cols-4");
+          teamGrid.classList.remove("grid-cols-5");
+          teamGrid.classList.add("grid-cols-3");
+        } else if (window.innerWidth <= 1080) {
+          teamGrid.classList.remove("grid-cols-1");
+          teamGrid.classList.remove("grid-cols-2");
+          teamGrid.classList.remove("grid-cols-3");
+          teamGrid.classList.remove("grid-cols-4");
+          teamGrid.classList.remove("grid-cols-5");
+          teamGrid.classList.add("grid-cols-4");
+        } else {
+          teamGrid.classList.remove("grid-cols-1");
+          teamGrid.classList.remove("grid-cols-2");
+          teamGrid.classList.remove("grid-cols-3");
+          teamGrid.classList.remove("grid-cols-4");
+          teamGrid.classList.remove("grid-cols-5");
+          teamGrid.classList.add("grid-cols-5");
+        }
+      }
+    }
+    resizeGridCols();
+    window.addEventListener("resize", resizeGridCols);
+  </script>
+  <div id="team-grid" class="grid content-center justify-center">
     {
       records.map((record) => (
-        <div class="p-5">
+        <div class="m-5 bg-gray-500">
           <h2>{record.name}</h2>
           <p>{record.title}</p>
           <p>{record.location}</p>
