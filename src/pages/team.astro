@@ -1,6 +1,7 @@
 ---
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 import PocketBase from "pocketbase";
+import { Image } from "astro:assets";
 
 const pb = new PocketBase("https://backontrack.lukeo.hackclub.app");
 
@@ -24,25 +25,22 @@ const records = await pb.collection("team").getFullList({
     {
       records.map((record) => (
         <div class="m-5 flex flex-col bg-gray p-5">
-          <img
-            class="w-full object-cover"
+          <Image
             src={pb.getFileUrl(record, record.image)}
+            alt={record.name}
+            class="w-full object-cover"
+            width="400"
+            height="300"
           />
           <p class="text-2xl">{record.name}</p>
           <p class="text-lg">{record.title}</p>
           <div class="m-5 flex items-center justify-center">
-            <svg
-              class="h-8 w-8 text-orange"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
+            <Image
+              src="/location.svg"
+              alt="location logo"
+              width="24"
+              height="24"
+            />
             <p class="m-1 text-lg">{record.location}</p>
           </div>
           <hr />
@@ -53,7 +51,12 @@ const records = await pb.collection("team").getFullList({
               if (record.instagram) {
                 return (
                   <a href={record.instagram} class="inline">
-                    <img src="/instagram.webp" width="40" height="40" />
+                    <Image
+                      src="/instagram.webp"
+                      alt="instagram logo"
+                      width="40"
+                      height="40"
+                    />
                   </a>
                 );
               }
@@ -62,7 +65,12 @@ const records = await pb.collection("team").getFullList({
               if (record.linkedin) {
                 return (
                   <a href={record.linkedin} class="inline">
-                    <img src="/linkedin.webp" width="40" height="40" />
+                    <Image
+                      src="/linkedin.webp"
+                      alt="linkedin logo"
+                      width="40"
+                      height="40"
+                    />
                   </a>
                 );
               }

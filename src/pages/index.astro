@@ -1,12 +1,16 @@
 ---
+import { Image } from "astro:assets";
+
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 ---
 
 <BackOnTrackLayout title="Back on Track | Home">
-  <img
+  <Image
     src="/map.png"
     alt="Map showing states that have chapters"
     class="h-fit w-screen"
+    width="5000"
+    height="5000"
   />
   <div class="h-full"></div>
 </BackOnTrackLayout>
