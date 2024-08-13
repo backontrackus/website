@@ -10,51 +10,6 @@ const records = await pb.collection("team").getFullList({
 ---
 
 <BackOnTrackLayout title="Back on Track | Team">
-  <script>
-    function resizeGridCols() {
-      const teamGrid = document.getElementById("team-grid");
-      if (teamGrid !== null) {
-        if (window.innerWidth <= 640) {
-          teamGrid.classList.remove("grid-cols-1");
-          teamGrid.classList.remove("grid-cols-2");
-          teamGrid.classList.remove("grid-cols-3");
-          teamGrid.classList.remove("grid-cols-4");
-          teamGrid.classList.remove("grid-cols-5");
-          teamGrid.classList.add("grid-cols-1");
-        } else if (window.innerWidth <= 768) {
-          teamGrid.classList.remove("grid-cols-1");
-          teamGrid.classList.remove("grid-cols-2");
-          teamGrid.classList.remove("grid-cols-3");
-          teamGrid.classList.remove("grid-cols-4");
-          teamGrid.classList.remove("grid-cols-5");
-          teamGrid.classList.add("grid-cols-2");
-        } else if (window.innerWidth <= 1024) {
-          teamGrid.classList.remove("grid-cols-1");
-          teamGrid.classList.remove("grid-cols-2");
-          teamGrid.classList.remove("grid-cols-3");
-          teamGrid.classList.remove("grid-cols-4");
-          teamGrid.classList.remove("grid-cols-5");
-          teamGrid.classList.add("grid-cols-3");
-        } else if (window.innerWidth <= 1080) {
-          teamGrid.classList.remove("grid-cols-1");
-          teamGrid.classList.remove("grid-cols-2");
-          teamGrid.classList.remove("grid-cols-3");
-          teamGrid.classList.remove("grid-cols-4");
-          teamGrid.classList.remove("grid-cols-5");
-          teamGrid.classList.add("grid-cols-4");
-        } else {
-          teamGrid.classList.remove("grid-cols-1");
-          teamGrid.classList.remove("grid-cols-2");
-          teamGrid.classList.remove("grid-cols-3");
-          teamGrid.classList.remove("grid-cols-4");
-          teamGrid.classList.remove("grid-cols-5");
-          teamGrid.classList.add("grid-cols-5");
-        }
-      }
-    }
-    resizeGridCols();
-    window.addEventListener("resize", resizeGridCols);
-  </script>
   <div class="m-5">
     <h1 class="text-center text-5xl text-blue">MEET OUR NATIONAL EXECUTIVES</h1>
     <hr class="m-5" />
@@ -62,10 +17,13 @@ const records = await pb.collection("team").getFullList({
       Meet the people who keep Back on Track on track!
     </h2>
   </div>
-  <div id="team-grid" class="grid content-center justify-center">
+  <div
+    id="team-grid"
+    class="grid content-center justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+  >
     {
       records.map((record) => (
-        <div class="bg-gray m-5 flex flex-col p-5">
+        <div class="m-5 flex flex-col bg-gray p-5">
           <img
             class="w-full object-cover"
             src={pb.getFileUrl(record, record.image)}
