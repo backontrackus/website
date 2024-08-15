@@ -11,10 +11,15 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
     <title>{title}</title>
+    <meta
+      name="description"
+      content="Back on Track is a 501c(3) nonprofit organization that helps coordinate student volunteers in their communities to help end food insecurity. Join us to volunteer in your community today!"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <style is:global>
