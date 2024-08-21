@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 const pb = new PocketBase("https://backontrack.lukeo.hackclub.app");
 
 const records = await pb.collection("team").getFullList({
+  filter: "hidden = false",
   sort: "-priority,+location,+title,+name",
 });
 ---
