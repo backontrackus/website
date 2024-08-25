@@ -14,12 +14,23 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow" />
-    <title>{title}</title>
+    <link rel="canonical" href={Astro.url.pathname} />
+    <meta property="og:url" content={Astro.url.pathname} />
+    <meta property="og:site_name" content="Back on Track America" />
+    <meta property="og:type" content="website" />
+    <title>Back on Track | {title}</title>
+    <meta property="og:title" content={title} />
     <meta
       name="description"
       content="Back on Track is a 501c(3) nonprofit organization that helps coordinate student volunteers in their communities to help end food insecurity. Join us to volunteer in your community today!"
     />
+    <meta
+      property="og:description"
+      content="Back on Track is a 501c(3) nonprofit organization that helps coordinate student volunteers in their communities to help end food insecurity. Join us to volunteer in your community today!"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <style is:global>
