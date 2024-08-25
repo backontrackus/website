@@ -13,9 +13,11 @@ const records = await pb.collection("team").getFullList({
 
 <BackOnTrackLayout title="Team">
   <div class="m-5">
-    <h1 class="text-center text-5xl text-blue">MEET OUR NATIONAL EXECUTIVES</h1>
+    <h1 class="p-5 text-center text-6xl font-extrabold text-blue">
+      Meet Our National Executives
+    </h1>
     <hr class="m-5" />
-    <h2 class="text-center text-2xl text-blue">
+    <h2 class="p-3 text-center text-2xl font-extrabold text-blue">
       Meet the people who keep Back on Track on track!
     </h2>
   </div>
@@ -24,15 +26,15 @@ const records = await pb.collection("team").getFullList({
   >
     {
       records.map((record) => (
-        <div class="m-5 flex flex-col bg-gray p-5">
+        <div class="m-5 flex flex-col bg-gray p-4">
           <Image
             src={pb.getFileUrl(record, record.image)}
             alt={record.name}
-            class="w-full object-cover"
+            class="w-full object-cover pb-1"
             width="400"
             height="300"
           />
-          <p class="text-2xl">{record.name}</p>
+          <p class="text-2xl font-bold text-blue">{record.name}</p>
           <p class="text-lg">{record.title}</p>
           <div class="m-5 flex items-center justify-center">
             <Image

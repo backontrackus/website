@@ -16,6 +16,10 @@ export default {
       orange: "#FF9900",
     },
     extend: {},
+    fontFamily: {
+      heading: ["Roboto", "sans-serif"],
+      paragraph: ["Montserrat", "sans-serif"],
+    },
   },
   plugins: [],
 };
