@@ -3,7 +3,7 @@ import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 import PocketBase from "pocketbase";
 import { Image } from "astro:assets";
 
-const pb = new PocketBase("https://backontrack.lukeo.hackclub.app");
+const pb = new PocketBase("https://pb.backontrackus.org");
 
 const records = await pb.collection("team").getFullList({
   filter: "hidden = false",
