@@ -1,5 +1,14 @@
 ---
-
+const pages = [
+  "Home",
+  "Volunteer",
+  "Team",
+  "Apply",
+  "Calendar",
+  "Shop",
+  "Contact",
+  "About",
+];
 ---
 
 <nav
@@ -10,31 +19,15 @@
   </a>
   <div class="mx-5 hidden h-10 w-px bg-white md:block"></div>
   <div class="flex flex-wrap items-center justify-evenly">
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/"
-      >Home</a
-    >
-    <a
-      class="mx-5 text-center text-white hover:text-bot-orange"
-      href="/volunteer">Volunteer</a
-    >
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/team"
-      >Team</a
-    >
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/apply"
-      >Apply</a
-    >
-    <a
-      class="mx-5 text-center text-white hover:text-bot-orange"
-      href="/calendar">Calendar</a
-    >
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/shop"
-      >Shop</a
-    >
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/contact"
-      >Contact</a
-    >
-    <a class="mx-5 text-center text-white hover:text-bot-orange" href="/about"
-      >About</a
-    >
+    {
+      pages.map((p) => (
+        <a
+          class="mx-5 text-center text-white hover:text-bot-orange"
+          href={`/${p.toLowerCase()}`}
+        >
+          {p}
+        </a>
+      ))
+    }
   </div>
 </nav>
