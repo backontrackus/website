@@ -14,55 +14,53 @@ const records = await pb.collection("locations").getFullList({
   <div
     class="bg-black/[.6] bg-[url('/volunteer.png')] bg-cover bg-fixed bg-center bg-no-repeat bg-blend-overlay"
   >
-    <div>
-      <h1 class="pt-10 text-center text-4xl font-bold text-white">Join Us</h1>
-      <h2 class="pt-5 text-center text-3xl font-semibold text-white">
+    <div class="flex flex-col items-center">
+      <h1 class="pt-10 text-center text-3xl font-bold text-white md:text-4xl">
+        Join Us
+      </h1>
+      <h2
+        class="pt-5 text-center text-2xl font-semibold text-white md:text-3xl"
+      >
         Interested in volunteering?<br />Click on the location closest to you to
         join!
       </h2>
-      <hr class="m-5 border-t border-white" />
-      <div class="m-5 grid grid-cols-1 place-items-center">
+      <hr class="my-5 w-2/3 border-t border-white" />
+      <div
+        class="m-5 grid w-1/2 grid-cols-1 place-items-center gap-5 md:grid-cols-2"
+      >
         {
           records.map((record) => {
             return (
-              <div class="flex py-3 text-white">
-                <p class="inline text-5xl font-bold">{record.name}</p>
-                {() => {
-                  if (record.remind) {
-                    return (
-                      <a
-                        href={record.remind}
-                        class="bg-blue-500 hover:bg-blue-400 border-blue-700 hover:border-blue-500 mx-10 inline rounded border-b-4 px-4 py-2 font-bold text-white"
-                      >
-                        Remind
-                      </a>
-                    );
-                  }
-                }}
-                {() => {
-                  if (record.groupme) {
-                    return (
-                      <a
-                        href={record.groupme}
-                        class="bg-blue-500 hover:bg-blue-400 border-blue-700 hover:border-blue-500 mx-10 inline rounded border-b-4 px-4 py-2 font-bold text-white"
-                      >
-                        GroupMe
-                      </a>
-                    );
-                  }
-                }}
-                {() => {
-                  if (record.whatsapp) {
-                    return (
-                      <a
-                        href={record.whatsapp}
-                        class="bg-blue-500 hover:bg-blue-400 border-blue-700 hover:border-blue-500 mx-10 inline rounded border-b-4 px-4 py-2 font-bold text-white"
-                      >
-                        WhatsApp
-                      </a>
-                    );
-                  }
-                }}
+              <div class="flex flex-col items-center justify-center gap-5">
+                <p class="text-center text-3xl font-bold text-white md:text-5xl">
+                  {record.name}
+                </p>
+                <div class="flex items-center justify-center gap-2">
+                  {record.remind && (
+                    <a
+                      href={record.remind}
+                      class="block rounded border-b-4 border-blue-700 bg-blue-500 px-4 py-2 font-bold text-white hover:border-blue-500 hover:bg-blue-400"
+                    >
+                      Remind
+                    </a>
+                  )}
+                  {record.groupme && (
+                    <a
+                      href={record.groupme}
+                      class="block rounded border-b-4 border-blue-700 bg-blue-500 px-4 py-2 font-bold text-white hover:border-blue-500 hover:bg-blue-400"
+                    >
+                      GroupMe
+                    </a>
+                  )}
+                  {record.whatsapp && (
+                    <a
+                      href={record.whatsapp}
+                      class="block rounded border-b-4 border-blue-700 bg-blue-500 px-4 py-2 font-bold text-white hover:border-blue-500 hover:bg-blue-400"
+                    >
+                      WhatsApp
+                    </a>
+                  )}
+                </div>
               </div>
             );
           })
