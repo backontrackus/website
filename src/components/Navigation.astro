@@ -23,7 +23,7 @@ const pages = [
       pages.map((p) => (
         <a
           class="mx-5 text-center text-white hover:text-bot-orange"
-          href={`/${p.toLowerCase()}`}
+          href={`/${p === "Home" ? "" : p.toLowerCase()}`}
         >
           {p}
         </a>
