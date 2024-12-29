@@ -11,18 +11,49 @@ const pages = [
 ];
 ---
 
+<!-- Desktop Navbar -->
 <nav
-  class="sticky left-0 top-0 flex w-full flex-wrap items-center justify-center gap-3 bg-bot-blue py-5"
+  class="sticky left-0 top-0 hidden w-full flex-wrap items-center justify-center gap-3 bg-bot-blue py-5 md:flex"
 >
   <a class="hover:text-orange mx-5 text-xl font-bold text-white" href="/">
     Back on Track America
   </a>
-  <div class="mx-5 hidden h-10 w-px bg-white md:block"></div>
+  <div class="mx-5 h-10 w-px bg-white"></div>
   <div class="flex flex-wrap items-center justify-evenly">
     {
       pages.map((p) => (
         <a
           class="mx-5 text-center text-white hover:text-bot-orange"
+          href={`/${p === "Home" ? "" : p.toLowerCase()}`}
+        >
+          {p}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<!-- Mobile Navbar -->
+<nav
+  class="sticky left-0 top-0 flex w-full flex-wrap items-center justify-between gap-3 bg-bot-blue px-5 py-5 md:hidden"
+>
+  <a class="hover:text-orange mx-5 text-xl font-bold text-white" href="/">
+    Back on Track America
+  </a>
+  <button
+    class="content-end text-white focus:outline-none"
+    onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+  >
+    &#9776;
+  </button>
+  <div
+    id="mobile-menu"
+    class="hidden w-full flex-col items-center justify-evenly"
+  >
+    {
+      pages.map((p) => (
+        <a
+          class="mx-5 block text-center text-white hover:text-bot-orange"
           href={`/${p === "Home" ? "" : p.toLowerCase()}`}
         >
           {p}
