@@ -13,11 +13,15 @@ const records = await pb.collection("team").getFullList({
 
 <BackOnTrackLayout title="Team">
   <div class="m-5">
-    <h1 class="text-bot-blue p-5 text-center text-6xl font-extrabold">
+    <h1
+      class="p-3 text-center text-4xl font-extrabold text-bot-blue md:p-5 md:text-6xl"
+    >
       Meet Our National Executives
     </h1>
-    <hr class="m-5" />
-    <h2 class="text-bot-blue p-3 text-center text-2xl font-extrabold">
+    <hr class="m-3 md:m-5" />
+    <h2
+      class="p-1 text-center text-xl font-extrabold text-bot-blue md:p-3 md:text-2xl"
+    >
       Meet the people who keep Back on Track on track!
     </h2>
   </div>
@@ -34,9 +38,9 @@ const records = await pb.collection("team").getFullList({
             width="400"
             height="300"
           />
-          <p class="text-bot-blue text-2xl font-bold">{record.name}</p>
+          <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
           <p class="text-lg">{record.title}</p>
-          <div class="m-5 flex items-center justify-center">
+          <div class="m-3 flex items-center justify-center md:m-5">
             <Image
               src="/location.svg"
               alt="Location Icon"
