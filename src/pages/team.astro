@@ -37,6 +37,7 @@ const records = await pb.collection("team").getFullList({
             class="w-full object-cover pb-1"
             width="400"
             height="300"
+            loading="eager"
           />
           <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
           <p class="text-lg">{record.title}</p>
@@ -46,6 +47,7 @@ const records = await pb.collection("team").getFullList({
               alt="Location Icon"
               width="24"
               height="24"
+              loading="eager"
             />
             <p class="m-1 text-lg">{record.location}</p>
           </div>
@@ -62,6 +64,7 @@ const records = await pb.collection("team").getFullList({
                       alt="Instagram Icon"
                       width="40"
                       height="40"
+                      loading="eager"
                     />
                   </a>
                 );
@@ -76,6 +79,7 @@ const records = await pb.collection("team").getFullList({
                       alt="LinkedIn Icon"
                       width="40"
                       height="40"
+                      loading="eager"
                     />
                   </a>
                 );
