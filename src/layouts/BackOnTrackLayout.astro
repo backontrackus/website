@@ -8,31 +8,56 @@ const { title } = Astro.props;
 
 <html lang="en">
   <head>
+    <!-- general tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={Astro.url.pathname} />
-    <meta property="og:url" content={Astro.url.pathname} />
-    <meta property="og:site_name" content="Back on Track America" />
-    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Back on Track | {title}</title>
-    <meta property="og:title" content={title} />
     <meta
       name="description"
       content="Back on Track is a 501c(3) nonprofit organization that helps coordinate student volunteers in their communities to help end food insecurity. Join us to volunteer in your community today!"
     />
+
+    <!-- font -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+    </style>
+
+    <!-- og tags -->
+    <meta property="og:title" content={"Back on Track | " + title} />
     <meta
       property="og:description"
       content="Back on Track is a 501c(3) nonprofit organization that helps coordinate student volunteers in their communities to help end food insecurity. Join us to volunteer in your community today!"
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-    </style>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.pathname} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Back on Track America" />
+
+    <!-- og image -->
+    <meta property="og:image" content="https://backontrackus.org/habitat.jpg" />
+    <meta
+      property="og:image:url"
+      content="https://backontrackus.org/habitat.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://backontrackus.org/habitat.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="721" />
+    <meta
+      property="og:image:alt"
+      content="Volunteers carrying wood planks to construct a home."
+    />
   </head>
+
   <body class="w-screen font-paragraph">
     <div class="relative flex min-h-screen w-screen flex-col">
       <Navigation />
