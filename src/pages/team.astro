@@ -12,6 +12,7 @@ const records = await pb.collection("team").getFullList({
 ---
 
 <BackOnTrackLayout title="Team">
+  <!-- current team heading -->
   <div class="m-5">
     <h1
       class="p-3 text-center text-4xl font-extrabold text-bot-blue md:p-5 md:text-6xl"
@@ -25,69 +26,157 @@ const records = await pb.collection("team").getFullList({
       Meet the people who keep Back on Track on track!
     </h2>
   </div>
+
+  <!-- current team grid -->
   <div
     class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
   >
     {
-      records.map((record) => (
-        <div class="mx-5 mb-10 flex flex-col bg-gray p-4">
-          <Image
-            src={pb.getFileUrl(record, record.image)}
-            alt={record.name}
-            class="w-full object-cover pb-1"
-            width="400"
-            height="300"
-            loading="eager"
-          />
-          <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
-          <p class="text-lg">{record.title}</p>
-          <div class="m-3 flex items-center justify-center md:m-5">
+      records
+        .filter((record) => !record.retired)
+        .map((record) => (
+          <div class="mx-5 mb-10 flex flex-col bg-gray p-4">
             <Image
-              src="/location.svg"
-              alt="Location Icon"
-              width="24"
-              height="24"
+              src={pb.getFileUrl(record, record.image)}
+              alt={record.name}
+              class="w-full object-cover pb-1"
+              width="400"
+              height="300"
               loading="eager"
             />
-            <p class="m-1 text-lg">{record.location}</p>
-          </div>
-          <hr />
-          <p class="mb-5 mt-5 text-lg">{record.bio}</p>
+            <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
+            <p class="text-lg">{record.title}</p>
+            <div class="m-3 flex items-center justify-center md:m-5">
+              <Image
+                src="/location.svg"
+                alt="Location Icon"
+                width="24"
+                height="24"
+                loading="eager"
+              />
+              <p class="m-1 text-lg">{record.location}</p>
+            </div>
+            <hr />
+            <p class="mb-5 mt-5 text-lg">{record.bio}</p>
 
-          <div class="mt-auto flex align-bottom">
-            {() => {
-              if (record.instagram) {
-                return (
-                  <a href={record.instagram} class="inline">
-                    <Image
-                      src="/instagram.svg"
-                      alt="Instagram Icon"
-                      width="40"
-                      height="40"
-                      loading="eager"
-                    />
-                  </a>
-                );
-              }
-            }}
-            {() => {
-              if (record.linkedin) {
-                return (
-                  <a href={record.linkedin} class="inline">
-                    <Image
-                      src="/linkedin.svg"
-                      alt="LinkedIn Icon"
-                      width="40"
-                      height="40"
-                      loading="eager"
-                    />
-                  </a>
-                );
-              }
-            }}
+            <div class="mt-auto flex align-bottom">
+              {() => {
+                if (record.instagram) {
+                  return (
+                    <a href={record.instagram} class="inline">
+                      <Image
+                        src="/instagram.svg"
+                        alt="Instagram Icon"
+                        width="40"
+                        height="40"
+                        loading="eager"
+                      />
+                    </a>
+                  );
+                }
+              }}
+              {() => {
+                if (record.linkedin) {
+                  return (
+                    <a href={record.linkedin} class="inline">
+                      <Image
+                        src="/linkedin.svg"
+                        alt="LinkedIn Icon"
+                        width="40"
+                        height="40"
+                        loading="eager"
+                      />
+                    </a>
+                  );
+                }
+              }}
+            </div>
           </div>
-        </div>
-      ))
+        ))
+    }
+  </div>
+
+  <!-- former team heading -->
+  <div class="m-5">
+    <h1
+      class="p-3 text-center text-4xl font-extrabold text-bot-blue md:p-5 md:text-6xl"
+    >
+      Acknowledgments
+    </h1>
+    <hr class="m-3 md:m-5" />
+    <h2
+      class="p-1 text-center text-xl font-extrabold text-bot-blue md:p-3 md:text-2xl"
+    >
+      Thank you to these people for shaping Back on Track into what it is today!
+    </h2>
+  </div>
+
+  <!-- former team grid -->
+  <div
+    class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+  >
+    {
+      records
+        .filter((record) => record.retired)
+        .map((record) => (
+          <div class="mx-5 mb-10 flex flex-col bg-gray p-4">
+            <Image
+              src={pb.getFileUrl(record, record.image)}
+              alt={record.name}
+              class="w-full object-cover pb-1"
+              width="400"
+              height="300"
+              loading="eager"
+            />
+            <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
+            <p class="text-lg">{record.title}</p>
+            <div class="m-3 flex items-center justify-center md:m-5">
+              <Image
+                src="/location.svg"
+                alt="Location Icon"
+                width="24"
+                height="24"
+                loading="eager"
+              />
+              <p class="m-1 text-lg">{record.location}</p>
+            </div>
+            <hr />
+            <p class="mb-5 mt-5 text-lg">{record.bio}</p>
+
+            <div class="mt-auto flex align-bottom">
+              {() => {
+                if (record.instagram) {
+                  return (
+                    <a href={record.instagram} class="inline">
+                      <Image
+                        src="/instagram.svg"
+                        alt="Instagram Icon"
+                        width="40"
+                        height="40"
+                        loading="eager"
+                      />
+                    </a>
+                  );
+                }
+              }}
+              {() => {
+                if (record.linkedin) {
+                  return (
+                    <a href={record.linkedin} class="inline">
+                      <Image
+                        src="/linkedin.svg"
+                        alt="LinkedIn Icon"
+                        width="40"
+                        height="40"
+                        loading="eager"
+                      />
+                    </a>
+                  );
+                }
+              }}
+            </div>
+          </div>
+        ))
     }
   </div>
 </BackOnTrackLayout>
