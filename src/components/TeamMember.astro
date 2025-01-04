@@ -1,0 +1,67 @@
+---
+import { Image } from "astro:assets";
+
+const { pb, record } = Astro.props;
+---
+
+<div class="mx-5 mb-10 flex flex-col bg-gray p-4">
+  <Image
+    src={pb.getFileUrl(record, record.image)}
+    alt={record.name}
+    class="w-full object-cover pb-1"
+    width="400"
+    height="300"
+    loading="eager"
+  />
+  <p class="text-2xl font-bold text-bot-blue">{record.name}</p>
+  <p class="text-lg">{record.title}</p>
+  <div class="m-3 flex items-center justify-center md:m-5">
+    <Image
+      src="/location.svg"
+      alt="Location Icon"
+      width="24"
+      height="24"
+      loading="eager"
+    />
+    <p class="m-1 text-lg">{record.location}</p>
+  </div>
+  <hr />
+  <p class="mb-5 mt-5 text-lg">{record.bio}</p>
+
+  <div class="mt-auto flex align-bottom">
+    {
+      () => {
+        if (record.instagram) {
+          return (
+            <a href={record.instagram} class="inline">
+              <Image
+                src="/instagram.svg"
+                alt="Instagram Icon"
+                width="40"
+                height="40"
+                loading="eager"
+              />
+            </a>
+          );
+        }
+      }
+    }
+    {
+      () => {
+        if (record.linkedin) {
+          return (
+            <a href={record.linkedin} class="inline">
+              <Image
+                src="/linkedin.svg"
+                alt="LinkedIn Icon"
+                width="40"
+                height="40"
+                loading="eager"
+              />
+            </a>
+          );
+        }
+      }
+    }
+  </div>
+</div>
