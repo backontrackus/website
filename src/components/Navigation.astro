@@ -13,24 +13,24 @@ const pages = [
 ---
 
 <nav
-  class="sticky left-0 top-0 flex w-full flex-wrap items-center justify-center gap-3 bg-bot-blue p-3 md:p-0 md:py-5"
+  class="sticky left-0 top-0 flex w-full flex-wrap items-center justify-center gap-3 bg-bot-blue p-3 xl:p-0 xl:py-5"
 >
   <a
-    class="hover:text-orange p-1 text-lg font-bold text-white md:mx-5 md:p-0 md:text-xl"
+    class="hover:text-orange p-1 text-lg font-bold text-white xl:mx-5 xl:p-0 xl:text-xl"
     href="/"
   >
     Back on Track America
   </a>
   <button
-    class="ml-auto text-lg font-bold text-white focus:outline-none md:hidden"
+    class="ml-auto text-lg font-bold text-white focus:outline-none xl:hidden"
     onclick="document.getElementById('menu').classList.toggle('hidden'); document.getElementById('menu').classList.toggle('flex');"
   >
     &#9776;
   </button>
-  <div class="mx-5 hidden h-10 w-px bg-white md:block"></div>
+  <div class="mx-5 hidden h-10 w-px bg-white xl:block"></div>
   <div
     id="menu"
-    class="hidden w-full flex-col items-center justify-evenly md:flex md:w-auto md:flex-row"
+    class="hidden w-full flex-col items-center justify-evenly xl:flex xl:w-auto xl:flex-row"
   >
     {
       pages.map((p) => (
