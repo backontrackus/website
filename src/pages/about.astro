@@ -1,5 +1,11 @@
 ---
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
+
+import PocketBase from "pocketbase";
+
+const pb = new PocketBase("https://pb.backontrackus.org");
+const records = await pb.collection("locations").getFullList();
+const chapters = records.length;
 ---
 
 <BackOnTrackLayout title="About">
@@ -45,7 +51,7 @@ import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
       <p
         class="text-center text-2xl font-extrabold italic text-white md:text-6xl"
       >
-        12
+        {chapters}
       </p>
       <p
         class="text-center text-xl font-extrabold text-white underline md:text-4xl"
