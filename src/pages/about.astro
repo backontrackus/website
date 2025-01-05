@@ -1,11 +1,20 @@
 ---
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
-
 import PocketBase from "pocketbase";
 
 const pb = new PocketBase("https://pb.backontrackus.org");
 const records = await pb.collection("locations").getFullList();
-const chapters = records.length;
+
+const chapterNum = records.length;
+
+const states: string[] = [];
+records.forEach((record) => {
+  const state = record.name.split(", ")[1];
+  if (!states.includes(state)) {
+    states.push(state);
+  }
+});
+const statesNum = states.length;
 ---
 
 <BackOnTrackLayout title="About">
@@ -51,7 +60,7 @@ const chapters = records.length;
       <p
         class="text-center text-2xl font-extrabold italic text-white md:text-6xl"
       >
-        {chapters}
+        {chapterNum}
       </p>
       <p
         class="text-center text-xl font-extrabold text-white underline md:text-4xl"
@@ -65,7 +74,7 @@ const chapters = records.length;
       <p
         class="text-center text-2xl font-extrabold italic text-white md:text-6xl"
       >
-        9
+        {statesNum}
       </p>
       <p
         class="text-center text-xl font-extrabold text-white underline md:text-4xl"
