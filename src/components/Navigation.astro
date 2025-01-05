@@ -30,12 +30,12 @@ const pages = [
   <div class="mx-5 hidden h-10 w-px bg-white xl:block"></div>
   <div
     id="menu"
-    class="hidden w-full flex-col items-center justify-evenly xl:flex xl:w-auto xl:flex-row"
+    class="hidden w-full flex-col items-end justify-evenly xl:flex xl:w-auto xl:flex-row xl:items-center"
   >
     {
       pages.map((p) => (
         <a
-          class="mx-5 text-center text-white hover:text-bot-orange"
+          class="text-center text-white hover:text-bot-orange xl:mx-5"
           href={`/${p === "Home" ? "" : p.toLowerCase()}`}
         >
           {p}
