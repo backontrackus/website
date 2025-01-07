@@ -4,8 +4,7 @@ import GAnalytics from "../components/GAnalytics.astro";
 import Navigation from "../components/Navigation.astro";
 import Socials from "../components/Socials.astro";
 
-const { page } = Astro.props;
-const title = `Back on Track | ${page}`;
+const { title } = Astro.props;
 const description =
   "Back on Track America is a 501(c)(3) nonprofit that helps coordinate student volunteers in their communities to help end homelessness and food insecurity.";
 ---
@@ -23,7 +22,7 @@ const description =
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <title>Back on Track | {title}</title>
     <meta name="description" content={description} />
 
     <!-- font -->
@@ -32,7 +31,7 @@ const description =
     </style>
 
     <!-- og tags -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={"Back on Track | " + title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.pathname} />
