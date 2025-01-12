@@ -3,7 +3,9 @@ import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 import PocketBase from "pocketbase";
 
 const pb = new PocketBase("https://pb.backontrackus.org");
-const records = await pb.collection("locations").getFullList();
+const records = await pb.collection("locations").getFullList({
+  filter: "inactive = false",
+});
 
 const chapterNum = records.length;
 
