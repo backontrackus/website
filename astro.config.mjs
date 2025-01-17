@@ -11,4 +11,10 @@ export default defineConfig({
   redirects: {
     "/apply": "https://forms.gle/j6vYD5Ki6pDzpHod9",
   },
+  routes: [
+    {
+      path: "404*",
+      component: "./src/pages/404.astro",
+    },
+  ],
 });
