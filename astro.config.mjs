@@ -8,9 +8,7 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
   },
-  redirects: {
-    "/apply": "https://forms.gle/j6vYD5Ki6pDzpHod9",
-  },
+  redirects: {},
   routes: [
     {
       path: "404*",
