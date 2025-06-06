@@ -1,0 +1,23 @@
+---
+import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
+import PocketBase from "pocketbase";
+import BlogPost from "../components/BlogPost.astro";
+
+const pb = new PocketBase("https://pb.backontrackus.org");
+
+const records = await pb.collection("blog").getFullList({
+  sort: "+created",
+});
+---
+
+<BackOnTrackLayout title="Blog">
+  <h1
+    class="m-5 p-3 text-center text-3xl font-extrabold text-bot-blue md:p-5 md:text-5xl"
+  >
+    Back on Track Blog
+  </h1>
+
+  <div class="grid h-full flex-grow grid-cols-1">
+    {records.map((record) => <BlogPost record={record} />)}
+  </div>
+</BackOnTrackLayout>

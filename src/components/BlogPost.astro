@@ -1,0 +1,11 @@
+---
+const { record } = Astro.props;
+---
+
+<div class="mx-5 mb-10 flex flex-col bg-gray p-4">
+  <h1 class="text-2xl font-bold">{record.title}</h1>
+  <h2 class="pb-10 text-xl italic underline">
+    {new Date(record.created).toLocaleDateString()}
+  </h2>
+  <p class="text-lg">{record.content}</p>
+</div>
