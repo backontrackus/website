@@ -17,5 +17,5 @@ export default defineConfig({
       component: "./src/pages/404.astro",
     },
   ],
-  site: "https://backontrackus.org/"
+  site: "https://backontrackus.org"
 });
