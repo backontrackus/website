@@ -8,7 +8,9 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
   },
-  redirects: {},
+  redirects: {
+    "/shop": "/shirts",
+  },
   routes: [
     {
       path: "404*",
