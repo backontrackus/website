@@ -34,7 +34,6 @@ const locations = await pb.collection("locations").getFullList({
             const links = await pb.collection("links").getFullList({
               filter: `location.id = "${location.id}"`,
             });
-            console.log(links);
             if (links.length > 0) {
               return (
                 <div class="flex flex-col items-center justify-center gap-3">
