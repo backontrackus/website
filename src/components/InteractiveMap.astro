@@ -7,102 +7,111 @@ const chapters = await pb.collection("locations").getFullList({
 });
 
 const stateAbbrevToName = {
-  "CA": "California",
-  "GA": "Georgia", 
-  "FL": "Florida",
-  "MO": "Missouri",
-  "NC": "North Carolina",
-  "VA": "Virginia",
-  "NJ": "New Jersey",
-  "PA": "Pennsylvania",
-  "CO": "Colorado",
-  "OR": "Oregon",
-  "WA": "Washington",
-  "ID": "Idaho",
-  "MT": "Montana",
-  "WY": "Wyoming",
-  "UT": "Utah",
-  "NV": "Nevada",
-  "AZ": "Arizona",
-  "NM": "New Mexico",
-  "HI": "Hawaii",
-  "TX": "Texas",
-  "OK": "Oklahoma",
-  "KS": "Kansas",
-  "NE": "Nebraska",
-  "SD": "South Dakota",
-  "ND": "North Dakota",
-  "MN": "Minnesota",
-  "IA": "Iowa",
-  "WI": "Wisconsin",
-  "MI": "Michigan",
-  "IL": "Illinois",
-  "IN": "Indiana",
-  "OH": "Ohio",
-  "WV": "West Virginia",
-  "KY": "Kentucky",
-  "TN": "Tennessee",
-  "SC": "South Carolina",
-  "AL": "Alabama",
-  "MS": "Mississippi",
-  "AR": "Arkansas",
-  "LA": "Louisiana",
-  "MD": "Maryland",
-  "DC": "District of Columbia",
-  "DE": "Delaware",
-  "NY": "New York",
-  "VT": "Vermont",
-  "NH": "New Hampshire",
-  "ME": "Maine",
-  "CT": "Connecticut",
-  "RI": "Rhode Island",
-  "MA": "Massachusetts",
-  "AK": "Alaska"
+  CA: "California",
+  GA: "Georgia",
+  FL: "Florida",
+  MO: "Missouri",
+  NC: "North Carolina",
+  VA: "Virginia",
+  NJ: "New Jersey",
+  PA: "Pennsylvania",
+  CO: "Colorado",
+  OR: "Oregon",
+  WA: "Washington",
+  ID: "Idaho",
+  MT: "Montana",
+  WY: "Wyoming",
+  UT: "Utah",
+  NV: "Nevada",
+  AZ: "Arizona",
+  NM: "New Mexico",
+  HI: "Hawaii",
+  TX: "Texas",
+  OK: "Oklahoma",
+  KS: "Kansas",
+  NE: "Nebraska",
+  SD: "South Dakota",
+  ND: "North Dakota",
+  MN: "Minnesota",
+  IA: "Iowa",
+  WI: "Wisconsin",
+  MI: "Michigan",
+  IL: "Illinois",
+  IN: "Indiana",
+  OH: "Ohio",
+  WV: "West Virginia",
+  KY: "Kentucky",
+  TN: "Tennessee",
+  SC: "South Carolina",
+  AL: "Alabama",
+  MS: "Mississippi",
+  AR: "Arkansas",
+  LA: "Louisiana",
+  MD: "Maryland",
+  DC: "District of Columbia",
+  DE: "Delaware",
+  NY: "New York",
+  VT: "Vermont",
+  NH: "New Hampshire",
+  ME: "Maine",
+  CT: "Connecticut",
+  RI: "Rhode Island",
+  MA: "Massachusetts",
+  AK: "Alaska",
 };
 
 const chapterData = await Promise.all(
-  chapters.map(async chapter => {
+  chapters.map(async (chapter) => {
     let links: RecordModel[] = [];
 
     links = await pb.collection("links").getFullList({
       filter: `location.id = "${chapter.id}"`,
-      requestKey: `links-${chapter.id}`
+      requestKey: `links-${chapter.id}`,
     });
-    
+
     return {
       id: chapter.id,
-      name: chapter.name.split(', ')[0],
+      name: chapter.name.split(", ")[0],
       lat: chapter.latitude || 0,
       lng: chapter.longitude || 0,
-      contact: chapter.poc || '',
-      state: chapter.name.split(', ')[1] || '',
+      contact: chapter.poc || "",
+      state: chapter.name.split(", ")[1] || "",
       links: links,
     };
   })
 );
 
-const statesWithChapters = Array.from(new Set(chapterData.map(chapter => stateAbbrevToName[chapter.state as keyof typeof stateAbbrevToName]))).filter(Boolean);
+const statesWithChapters = Array.from(
+  new Set(
+    chapterData.map(
+      (chapter) =>
+        stateAbbrevToName[chapter.state as keyof typeof stateAbbrevToName]
+    )
+  )
+).filter(Boolean);
 
 const statesData = {
   current: statesWithChapters,
   colors: {
     current: "#ff9900",
-    expansion: "#007bc1"
-  }
+    expansion: "#007bc1",
+  },
 };
 ---
 
-<div id="map-container" class="w-full h-96 md:h-[500px] lg:h-[600px] relative z-0">
-  <div id="interactive-map" class="w-full h-full rounded-lg"></div>
+<div
+  id="map-container"
+  class="relative z-0 h-96 w-full md:h-[500px] lg:h-[600px]"
+>
+  <div id="interactive-map" class="h-full w-full rounded-lg"></div>
 </div>
-
 
 <script src="/js/interactive-map.js" is:inline></script>
 
 <script>
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
-  
+  import L from "leaflet";
+  import "leaflet/dist/leaflet.css";
+
   window.L = L;
 </script>
 
