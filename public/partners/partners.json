@@ -1,0 +1,56 @@
+[
+    {
+      "name": "Bay Chapel",
+      "image": "/partners/bay-chapel.png",
+      "url": "https://baychapelfoodpantry.org/",
+      "description": "A community church serving the Tampa Bay area."
+    },
+    {
+      "name": "Bread of the Mighty",
+      "image": "/partners/botm.png",
+      "url": "https://breadofthemighty.org",
+      "description": "Bread of the Mighty is a non-profit organization that provides food and shelter to the homeless and those in need."
+    },
+    {
+      "name": "Feeding Tampa Bay",
+      "image": "/partners/feeding-tampa-bay.png",
+      "url": "https://feedingtampabay.org/",
+      "description": "A non-profit organization that provides food and shelter to the homeless and those in need."
+    },
+    {
+      "name": "Habitat for Humanity",
+      "image": "/partners/habitat-for-humanity.png",
+      "url": "https://www.habitat.org/",
+      "description": "Providing affordable homes for families in need."
+    },
+    {
+      "name": "ICNA Relief",
+      "image": "/partners/icna-relief.png",
+      "url": "https://www.icnarelief.org/",
+      "description": "Humanitarian relief organization"
+    },
+    {
+      "name": "Metropolitan Ministries",
+      "image": "/partners/metropolitan-ministries.png",
+      "url": "https://metromin.org/",
+      "description": "Providng food and shelter to the homeless and those in need."
+    },
+    {
+      "name": "Nameless Ministries",
+      "image": "/partners/nameless-ministries.png",
+      "url": "https://namelessministry.org/",
+      "description": "Serving all those in need regardless of race, religion, creed or status."
+    },
+    {
+      "name": "Sodexo",
+      "image": "/partners/sodexo.png",
+      "url": "https://ysa.org/grants/sodexo/",
+      "description": "A foundation dedicated to preventing hunger."
+    },
+    {
+      "name": "Tampa Hope",
+      "image": "/partners/tampa-hope.png",
+      "url": "https://www.ccdosp.org/tampa-hope/",
+      "description": "Tampa Hope is a Catholic Charities operated shelter presently serving up to 234 homeless adults with plans to expand to 335."
+    }
+]

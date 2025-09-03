@@ -1,0 +1,36 @@
+<div id="partnerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+  <div class="relative max-w-md w-full bg-white rounded-lg shadow-xl">
+    <button
+      type="button"
+      onclick="closePartnerModal()"
+      class="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+      aria-label="Close modal"
+    >
+      &times;
+    </button>
+    <div class="p-8">
+      <div class="flex flex-col items-center text-center">
+        <img
+          id="modalPartnerImage"
+          src=""
+          alt=""
+          class="h-24 w-auto object-contain mb-4"
+        />
+        <h3 id="modalPartnerName" class="text-2xl font-bold text-bot-blue mb-4"></h3>
+        <p id="modalPartnerDescription" class="text-gray-600 mb-6 leading-relaxed"></p>
+        <a
+          id="modalPartnerLink"
+          href=""
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-6 py-3 bg-bot-blue text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+        >
+          Visit Website
+          <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
