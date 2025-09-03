@@ -17,7 +17,7 @@ function initializeInteractiveMap(chapterData, statesData) {
     }).setView([39.8283, -98.5795], 4);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+      attribution: '&#169; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &#169; <a href="https://carto.com/attributions">CARTO</a>',
       maxZoom: 19
     }).addTo(map);
 
@@ -32,7 +32,7 @@ function initializeInteractiveMap(chapterData, statesData) {
       if (statesData.current.includes(stateName)) {
         return 0.7;
       }
-      
+
       return 0.5;
     }
 
@@ -50,16 +50,16 @@ function initializeInteractiveMap(chapterData, statesData) {
 
     function highlightFeature(e) {
       var layer = e.target;
-      
+
       layer.setStyle({
         weight: 4,
         color: '#666',
         dashArray: '',
         fillOpacity: 0.8
       });
-      
+
       layer.bringToFront();
-      
+
       info.update(layer.feature.properties);
     }
 
@@ -81,14 +81,14 @@ function initializeInteractiveMap(chapterData, statesData) {
     }
 
     var info = L.control();
-    
+
     info.onAdd = function (map) {
       this._div = L.DomUtil.create('div', 'info');
       this._div.className = 'px-2 py-1.5 text-sm leading-4 font-sans bg-white/80 shadow-lg rounded-md md:text-base md:px-3 md:py-2';
       this.update();
       return this._div;
     };
-    
+
     info.update = function (props) {
       var status = '';
       var stateName = '';
@@ -99,15 +99,15 @@ function initializeInteractiveMap(chapterData, statesData) {
         } else {
           status = ' - <span style="color: ' + statesData.colors.expansion + '; font-weight: bold;">Expansion Target</span>';
         }
-        this._div.innerHTML = (props ? '<b>' + stateName + '</b>' + status: '');
+        this._div.innerHTML = (props ? '<b>' + stateName + '</b>' + status : '');
       }
-      
+
     };
-    
+
     info.addTo(map);
 
     var geojson;
-    
+
     fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
       .then(response => response.json())
       .then(data => {
@@ -153,9 +153,9 @@ function initializeInteractiveMap(chapterData, statesData) {
     function resizeMap() {
       map.invalidateSize();
     }
-    
+
     window.addEventListener('resize', resizeMap);
-    
+
     setTimeout(resizeMap, 100);
   }
 
