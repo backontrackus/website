@@ -96,12 +96,12 @@ function initializeInteractiveMap(chapterData, statesData) {
         stateName = props.NAME || props.name || props.NAME_1 || props.state_name || 'Unknown State';
         if (statesData.current.includes(stateName)) {
           status = ' - <span style="color: ' + statesData.colors.current + '; font-weight: bold;">Active State</span>';
-        } else if (statesData.expansion.includes(stateName)) {
+        } else {
           status = ' - <span style="color: ' + statesData.colors.expansion + '; font-weight: bold;">Expansion Target</span>';
         }
+        this._div.innerHTML = (props ? '<b>' + stateName + '</b>' + status: '');
       }
       
-      this._div.innerHTML = (props ? '<b>' + stateName + '</b>' + status: '');
     };
     
     info.addTo(map);
