@@ -6,7 +6,7 @@ const { pb, record } = Astro.props;
 
 <div class="mx-5 mb-10 flex flex-col bg-gray p-4">
   <Image
-    src={record.cachedImageUrl || pb.getFileUrl(record, record.image)}
+    src={record.image || pb.getFileUrl(record, record.image)}
     alt={record.name}
     class="w-full object-cover pb-1"
     width="400"

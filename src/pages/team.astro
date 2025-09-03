@@ -2,8 +2,6 @@
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 import PocketBase from "pocketbase";
 import TeamMember from "../components/TeamMember.astro";
-import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
 
 const pb = new PocketBase("https://pb.backontrackus.org");
 
@@ -12,34 +10,22 @@ const records = await pb.collection("team").getFullList({
   sort: "-priority,+location,+title,+name",
 });
 
-const cacheDir = join(process.cwd(), "public", "cached-images");
-if (!existsSync(cacheDir)) {
-  mkdirSync(cacheDir, { recursive: true });
-}
-
 const processedRecords = await Promise.all(
   records.map(async (record) => {
     if (record.image) {
       const imageUrl = pb.getFileUrl(record, record.image);
-      const fileName = `${record.id}-${record.image}`;
-      const localPath = join(cacheDir, fileName);
-      const publicPath = `/cached-images/${fileName}`;
-      
-      if (!existsSync(localPath) || process.env.NODE_ENV !== "production") {
-        try {
-          const response = await fetch(imageUrl);
-          if (response.ok) {
-            const buffer = await response.arrayBuffer();
-            writeFileSync(localPath, new Uint8Array(buffer));
-            console.log(`Cached image: ${fileName}`);
-          }
-        } catch (error) {
-          console.warn(`Failed to cache image for ${record.name}:`, error);
-          return { ...record, cachedImageUrl: imageUrl };
-        }
+      try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const arrayBuffer = await blob.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        const mimeType = blob.type || 'image/png';
+        const dataUrl = `data:${mimeType};base64,${base64}`;
+        return { ...record, image: dataUrl };
+      } catch (error) {
+        console.warn(`Failed to fetch image for ${record.name}:`, error);
+        return { ...record, image: imageUrl }; // Fallback to original URL
       }
-      
-      return { ...record, cachedImageUrl: publicPath };
     }
     return record;
   })
