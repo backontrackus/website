@@ -9,6 +9,27 @@ const records = await pb.collection("team").getFullList({
   filter: "hidden = false",
   sort: "-priority,+location,+title,+name",
 });
+
+const processedRecords = await Promise.all(
+  records.map(async (record) => {
+    if (record.image) {
+      const imageUrl = pb.getFileUrl(record, record.image);
+      try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const arrayBuffer = await blob.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        const mimeType = blob.type || 'image/png';
+        const dataUrl = `data:${mimeType};base64,${base64}`;
+        return { ...record, image: dataUrl };
+      } catch (error) {
+        console.warn(`Failed to fetch image for ${record.name}:`, error);
+        return { ...record, image: imageUrl }; // Fallback to original URL
+      }
+    }
+    return record;
+  })
+);
 ---
 
 <BackOnTrackLayout title="Team">
@@ -32,7 +53,7 @@ const records = await pb.collection("team").getFullList({
     class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
   >
     {
-      records
+      processedRecords
         .filter((record) => !record.retired)
         .map((record) => (
           <TeamMember pb={pb} record={record} />
@@ -41,7 +62,7 @@ const records = await pb.collection("team").getFullList({
   </div>
 
   {() => {
-    if (records.filter((record) => record.retired).length > 0) {
+    if (processedRecords.filter((record) => record.retired).length > 0) {
       return (
         <!-- acknowledgments heading -->
         <div class="m-5">
@@ -63,7 +84,7 @@ const records = await pb.collection("team").getFullList({
           class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
         >
           {
-            records
+            processedRecords
               .filter((record) => record.retired)
               .map((record) => (
                 <TeamMember pb={pb} record={record} />
