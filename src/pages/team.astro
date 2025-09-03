@@ -25,7 +25,7 @@ const processedRecords = await Promise.all(
       const localPath = join(cacheDir, fileName);
       const publicPath = `/cached-images/${fileName}`;
       
-      if (!existsSync(localPath)) {
+      if (!existsSync(localPath) || process.env.NODE_ENV !== "production") {
         try {
           const response = await fetch(imageUrl);
           if (response.ok) {
