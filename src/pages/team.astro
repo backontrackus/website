@@ -2,6 +2,8 @@
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
 import PocketBase from "pocketbase";
 import TeamMember from "../components/TeamMember.astro";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { join } from "path";
 
 const pb = new PocketBase("https://pb.backontrackus.org");
 
@@ -9,6 +11,39 @@ const records = await pb.collection("team").getFullList({
   filter: "hidden = false",
   sort: "-priority,+location,+title,+name",
 });
+
+const cacheDir = join(process.cwd(), "public", "cached-images");
+if (!existsSync(cacheDir)) {
+  mkdirSync(cacheDir, { recursive: true });
+}
+
+const processedRecords = await Promise.all(
+  records.map(async (record) => {
+    if (record.image) {
+      const imageUrl = pb.getFileUrl(record, record.image);
+      const fileName = `${record.id}-${record.image}`;
+      const localPath = join(cacheDir, fileName);
+      const publicPath = `/cached-images/${fileName}`;
+      
+      if (!existsSync(localPath)) {
+        try {
+          const response = await fetch(imageUrl);
+          if (response.ok) {
+            const buffer = await response.arrayBuffer();
+            writeFileSync(localPath, new Uint8Array(buffer));
+            console.log(`Cached image: ${fileName}`);
+          }
+        } catch (error) {
+          console.warn(`Failed to cache image for ${record.name}:`, error);
+          return { ...record, cachedImageUrl: imageUrl };
+        }
+      }
+      
+      return { ...record, cachedImageUrl: publicPath };
+    }
+    return record;
+  })
+);
 ---
 
 <BackOnTrackLayout title="Team">
@@ -32,7 +67,7 @@ const records = await pb.collection("team").getFullList({
     class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
   >
     {
-      records
+      processedRecords
         .filter((record) => !record.retired)
         .map((record) => (
           <TeamMember pb={pb} record={record} />
@@ -41,7 +76,7 @@ const records = await pb.collection("team").getFullList({
   </div>
 
   {() => {
-    if (records.filter((record) => record.retired).length > 0) {
+    if (processedRecords.filter((record) => record.retired).length > 0) {
       return (
         <!-- acknowledgments heading -->
         <div class="m-5">
@@ -63,7 +98,7 @@ const records = await pb.collection("team").getFullList({
           class="grid h-full flex-grow content-center justify-center sm:grid-cols-1 sm:px-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
         >
           {
-            records
+            processedRecords
               .filter((record) => record.retired)
               .map((record) => (
                 <TeamMember pb={pb} record={record} />
