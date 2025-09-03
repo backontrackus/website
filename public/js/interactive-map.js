@@ -141,7 +141,7 @@ function initializeInteractiveMap(chapterData, statesData) {
           <div class="p-3 max-w-xs">
             <h3 class="font-bold text-lg text-bot-blue mb-2">${chapter.name}</h3>
             <div class="h-px my-2 bg-gray-200 mb-2"></div>
-            <div class="text-sm font-medium text-gray-600 mb-2">Quick Links:</div>
+            <div class="text-sm font-medium text-gray-600 mb-2">Volunteer Links:</div>
             ${chapter.links.map(link => `<a href="${link.url}" class="text-bot-blue">${link.name}</a>`).join('')}
           </div>
         `;
