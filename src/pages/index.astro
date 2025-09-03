@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 
 import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
+import InteractiveMap from "../components/InteractiveMap.astro";
 ---
 
 <BackOnTrackLayout title="Home">
@@ -18,14 +19,9 @@ import BackOnTrackLayout from "../layouts/BackOnTrackLayout.astro";
       coordinating student volunteers in our communities.
     </h2>
   </div>
-  <Image
-    src="/map.png"
-    alt="Map showing states that have chapters"
-    class="h-fit w-screen"
-    width="5000"
-    height="3000"
-    loading="eager"
-  />
+  <div class="w-full max-w-5xl mx-auto">
+    <InteractiveMap />
+  </div>
   <Image
     src="/partners.png"
     alt="Logos of our partner organizations"
