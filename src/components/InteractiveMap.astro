@@ -1,6 +1,5 @@
 ---
 import PocketBase, { type RecordModel } from "pocketbase";
-import 'leaflet/dist/leaflet.css';
 
 const pb = new PocketBase("https://pb.backontrackus.org");
 const chapters = await pb.collection("locations").getFullList({
@@ -102,6 +101,8 @@ const statesData = {
 
 <script>
   import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  
   window.L = L;
 </script>
 
