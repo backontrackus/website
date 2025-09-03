@@ -1,48 +1,97 @@
 ---
-import PocketBase from "pocketbase";
+import PocketBase, { type RecordModel } from "pocketbase";
 
 const pb = new PocketBase("https://pb.backontrackus.org");
 const chapters = await pb.collection("locations").getFullList({
   filter: "inactive = false",
 });
 
-const mapDataResponse = await fetch(new URL('/map.txt', Astro.url));
-const mapDataText = await mapDataResponse.text();
-const mapData = JSON.parse(mapDataText);
-
 const stateAbbrevToName = {
-  "CA": "California", "GA": "Georgia", "FL": "Florida", "MO": "Missouri", 
-  "NC": "North Carolina", "VA": "Virginia", "NJ": "New Jersey", "PA": "Pennsylvania", 
-  "CO": "Colorado", "OR": "Oregon", "WA": "Washington", "ID": "Idaho", 
-  "MT": "Montana", "WY": "Wyoming", "UT": "Utah", "NV": "Nevada", 
-  "AZ": "Arizona", "NM": "New Mexico", "HI": "Hawaii", "TX": "Texas", 
-  "OK": "Oklahoma", "KS": "Kansas", "NE": "Nebraska", "SD": "South Dakota", 
-  "ND": "North Dakota", "MN": "Minnesota", "IA": "Iowa", "WI": "Wisconsin", 
-  "MI": "Michigan", "IL": "Illinois", "IN": "Indiana", "OH": "Ohio", 
-  "WV": "West Virginia", "KY": "Kentucky", "TN": "Tennessee", "SC": "South Carolina", 
-  "AL": "Alabama", "MS": "Mississippi", "AR": "Arkansas", "LA": "Louisiana", 
-  "MD": "Maryland", "DC": "District of Columbia", "DE": "Delaware", "NY": "New York", 
-  "VT": "Vermont", "NH": "New Hampshire", "ME": "Maine", "CT": "Connecticut", 
-  "RI": "Rhode Island", "MA": "Massachusetts", "AK": "Alaska"
+  "CA": "California",
+  "GA": "Georgia", 
+  "FL": "Florida",
+  "MO": "Missouri",
+  "NC": "North Carolina",
+  "VA": "Virginia",
+  "NJ": "New Jersey",
+  "PA": "Pennsylvania",
+  "CO": "Colorado",
+  "OR": "Oregon",
+  "WA": "Washington",
+  "ID": "Idaho",
+  "MT": "Montana",
+  "WY": "Wyoming",
+  "UT": "Utah",
+  "NV": "Nevada",
+  "AZ": "Arizona",
+  "NM": "New Mexico",
+  "HI": "Hawaii",
+  "TX": "Texas",
+  "OK": "Oklahoma",
+  "KS": "Kansas",
+  "NE": "Nebraska",
+  "SD": "South Dakota",
+  "ND": "North Dakota",
+  "MN": "Minnesota",
+  "IA": "Iowa",
+  "WI": "Wisconsin",
+  "MI": "Michigan",
+  "IL": "Illinois",
+  "IN": "Indiana",
+  "OH": "Ohio",
+  "WV": "West Virginia",
+  "KY": "Kentucky",
+  "TN": "Tennessee",
+  "SC": "South Carolina",
+  "AL": "Alabama",
+  "MS": "Mississippi",
+  "AR": "Arkansas",
+  "LA": "Louisiana",
+  "MD": "Maryland",
+  "DC": "District of Columbia",
+  "DE": "Delaware",
+  "NY": "New York",
+  "VT": "Vermont",
+  "NH": "New Hampshire",
+  "ME": "Maine",
+  "CT": "Connecticut",
+  "RI": "Rhode Island",
+  "MA": "Massachusetts",
+  "AK": "Alaska"
 };
 
+const chapterData = await Promise.all(
+  chapters.map(async chapter => {
+    let links: RecordModel[] = [];
+
+    links = await pb.collection("links").getFullList({
+      filter: `location.id = "${chapter.id}"`,
+      requestKey: `links-${chapter.id}`
+    });
+    
+    return {
+      id: chapter.id,
+      name: chapter.name.split(', ')[0],
+      lat: chapter.latitude || 0,
+      lng: chapter.longitude || 0,
+      contact: chapter.poc || '',
+      state: chapter.name.split(', ')[1] || '',
+      links: links,
+    };
+  })
+);
+
+const statesWithChapters = Array.from(new Set(chapterData.map(chapter => stateAbbrevToName[chapter.state as keyof typeof stateAbbrevToName]))).filter(Boolean);
+
 const statesData = {
-  current: mapData.groups["#ff9900"]?.paths.map((abbrev: string) => stateAbbrevToName[abbrev as keyof typeof stateAbbrevToName]).filter(Boolean) || [],
-  expansion: mapData.groups["#007bc1"]?.paths.map((abbrev: string) => stateAbbrevToName[abbrev as keyof typeof stateAbbrevToName]).filter(Boolean) || [],
+  current: statesWithChapters,
+  expansion: [],
   colors: {
     current: "#ff9900",
     expansion: "#007bc1"
   }
 };
 
-const chapterData = chapters.map(chapter => ({
-  id: chapter.id,
-  name: chapter.name.split(', ')[0],
-  lat: chapter.latitude || 0,
-  lng: chapter.longitude || 0,
-  contact: chapter.poc || '',
-  state: chapter.name.split(', ')[1] || ''
-}));
 ---
 
 <div id="map-container" class="w-full h-96 md:h-[500px] lg:h-[600px] relative z-0">
@@ -51,272 +100,8 @@ const chapterData = chapters.map(chapter => ({
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/interactive-map.js" is:inline></script>
 
 <script define:vars={{ chapterData, statesData }}>
-  function initializeMap() {
-    if (typeof L === 'undefined') {
-      setTimeout(initializeMap, 50);
-      return;
-    }
-
-    const map = L.map('interactive-map', {
-    zoomControl: true,
-    scrollWheelZoom: true,
-    doubleClickZoom: true,
-    boxZoom: true,
-    keyboard: true,
-    dragging: true,
-    touchZoom: true,
-    attributionControl: false
-  }).setView([39.8283, -98.5795], 4);
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-    maxZoom: 19
-  }).addTo(map);
-
-  function getStateColor(stateName) {
-    if (statesData.current.includes(stateName)) {
-      return statesData.colors.current;
-    } else if (statesData.expansion.includes(stateName)) {
-      return statesData.colors.expansion;
-    } else {
-      return '#e5e7eb';
-    }
-  }
-
-  function getStateOpacity(stateName) {
-    if (statesData.current.includes(stateName)) {
-      return 0.7;
-    } else if (statesData.expansion.includes(stateName)) {
-      return 0.4;
-    }
-  }
-
-  function style(feature) {
-    const stateName = feature.properties.NAME || feature.properties.name || feature.properties.NAME_1 || feature.properties.state_name;
-    return {
-      fillColor: getStateColor(stateName),
-      weight: 2,
-      opacity: 1,
-      color: 'white',
-      dashArray: '3',
-      fillOpacity: getStateOpacity(stateName)
-    };
-  }
-
-  function highlightFeature(e) {
-    var layer = e.target;
-    
-    layer.setStyle({
-      weight: 4,
-      color: '#666',
-      dashArray: '',
-      fillOpacity: 0.8
-    });
-    
-    layer.bringToFront();
-    
-    info.update(layer.feature.properties);
-  }
-
-  function resetHighlight(e) {
-    geojson.resetStyle(e.target);
-    info.update();
-  }
-
-  function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
-  }
-
-  function onEachFeature(feature, layer) {
-    layer.on({
-      mouseover: highlightFeature,
-      mouseout: resetHighlight,
-      click: zoomToFeature
-    });
-  }
-
-  var info = L.control();
-  
-  info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info');
-    this.update();
-    return this._div;
-  };
-  
-  info.update = function (props) {
-    var status = '';
-    var stateName = '';
-    if (props) {
-      stateName = props.NAME || props.name || props.NAME_1 || props.state_name || 'Unknown State';
-      if (statesData.current.includes(stateName)) {
-        status = ' - <span style="color: ' + statesData.colors.current + '; font-weight: bold;">Active State</span>';
-      } else if (statesData.expansion.includes(stateName)) {
-        status = ' - <span style="color: ' + statesData.colors.expansion + '; font-weight: bold;">Expansion Target</span>';
-      }
-    }
-    
-    this._div.innerHTML = (props ? '<b>' + stateName + '</b>' + status: '');
-  };
-  
-  info.addTo(map);
-
-  var geojson;
-  
-  fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
-    .then(response => response.json())
-    .then(data => {
-
-      geojson = L.geoJson(data, {
-        style: style,
-        onEachFeature: onEachFeature
-      }).addTo(map);
-    })
-    .catch(error => {
-      console.error('Error loading state boundaries:', error);
-    });
-
-  const chapterIcon = L.icon({
-    iconUrl: 'data:image/svg+xml;base64,' + btoa(`
-      <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
-        <path fill="${statesData.colors.current}" stroke-width="2" d="M12.5 0C5.6 0 0 5.6 0 12.5c0 12.5 12.5 28.5 12.5 28.5s12.5-16 12.5-28.5C25 5.6 19.4 0 12.5 0z"/>
-        <circle fill="#fff" cx="12.5" cy="12.5" r="6"/>
-      </svg>
-    `),
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
-  });
-
-  chapterData.forEach(chapter => {
-    if (chapter.lat && chapter.lng) {
-      const marker = L.marker([chapter.lat, chapter.lng], { icon: chapterIcon })
-        .addTo(map);
-
-      const popupContent = `
-        <div class="p-3 max-w-xs">
-          <h3 class="font-bold text-lg text-bot-blue mb-2">${chapter.name}</h3>
-          ${chapter.contact ? `<p class="text-sm text-gray-600">Contact: ${chapter.contact}</p>` : ''}
-        </div>
-      `;
-
-      marker.bindPopup(popupContent);
-    }
-  });
-
-  function resizeMap() {
-    map.invalidateSize();
-  }
-  
-  window.addEventListener('resize', resizeMap);
-  
-  setTimeout(resizeMap, 100);
-  }
-
-  document.documentElement.style.setProperty('--current-color', statesData.colors.current);
-  document.documentElement.style.setProperty('--expansion-color', statesData.colors.expansion);
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeMap);
-  } else {
-    initializeMap();
-  }
+  initializeInteractiveMap(chapterData, statesData);
 </script>
-
-<style>
-  .info {
-    padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
-  }
-  
-  .info h4 {
-    margin: 0 0 5px;
-    color: #777;
-  }
-
-  .legend {
-    background: white !important;
-    border-radius: 8px !important;
-    padding: 12px !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-    font-family: system-ui, -apple-system, sans-serif !important;
-    line-height: 18px;
-    color: #555;
-  }
-  
-  .legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-  }
-  
-  .legend-content {
-    font-size: 14px;
-  }
-  
-  .legend-title {
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #1e40af;
-  }
-  
-  .legend-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-  
-  .legend-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    margin-right: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  
-  .current-state {
-    background-color: var(--current-color, #ff9900);
-    opacity: 0.7;
-  }
-  
-  .expansion-state {
-    background-color: var(--expansion-color, #007bc1);
-    opacity: 0.3;
-  }
-  
-  .legend-icon {
-    width: 16px;
-    margin-right: 8px;
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .info {
-      font-size: 12px !important;
-      padding: 4px 6px !important;
-    }
-    
-    .legend {
-      font-size: 12px !important;
-      padding: 8px !important;
-    }
-    
-    .legend-color {
-      width: 12px;
-      height: 12px;
-      margin-right: 6px;
-    }
-    
-    .legend-icon {
-      width: 12px;
-      margin-right: 6px;
-    }
-  }
-</style>
