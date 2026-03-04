@@ -10,6 +10,7 @@ export default defineConfig({
   },
   redirects: {
     "/shop": "/shirts",
+    "/database": "https://pb.backontrackus.org/_/"
   },
   routes: [
     {
