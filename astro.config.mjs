@@ -10,7 +10,8 @@ export default defineConfig({
   },
   redirects: {
     "/shop": "/shirts",
-    "/database": "https://pb.backontrackus.org/_/"
+    "/database": "https://pb.backontrackus.org/_/",
+    "/donate": "https://donate.stripe.com/fZudRb9eL2wb1MqdQDgA800"
   },
   routes: [
     {
